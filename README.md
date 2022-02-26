@@ -2,4 +2,4 @@
 
 Second project in the Free Code Camp Quality Assurance Certification.
 
-Full stack JavaScript app: https://issue-tracker.kate-mills.repl.co/
+Check mine out here: https://issue-tracker.kate-mills.repl.co/
