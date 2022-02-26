@@ -3,13 +3,19 @@ const chai = require('chai');
 const assert = chai.assert;
 const server = require('../server');
 
+
 chai.use(chaiHttp);
 
 suite('Functional Tests', function() {
+  let getDate = () => {
+    return new Date().toISOString().split('T')[1].replace('Z', ': ')
+  }
+
   let  _ids = [];  // valid ids returned from succesful post request
 
+
   // #1
-  test('POST: Create an issue with every field', function(done) {
+  test(`POST ${getDate()}Create an issue with every field`, function(done) {
     chai
       .request(server)
       .post(`/api/issues/apitest`)
@@ -21,14 +27,22 @@ suite('Functional Tests', function() {
         status_text: "asap"
       })
       .end(function(err, res) {
-        //_ids.push(res.body._id)
+        _ids.push(res.body._id)
         assert.equal(res.status, 200);
+        assert.equal(res.body.issue_title, "Be creative");
+        assert.equal(res.body.issue_text, "Needs fixin, oh no!");
+        assert.equal(res.body.created_by, "kate-mills");
+        assert.equal(res.body.assigned_to, "kate");
+        assert.equal(res.body.status_text, "asap");
+        assert.equal(res.body.open, true);
+        assert.equal(res.body.created_on, new Date(res.body.created_on).toJSON());
+        assert.equal(res.body.updated_on.length>0, true);
         done();
       });
   });
 
   // #2
-  test('POST: Create an issue with only required fields', function(done) {
+  test(`POST ${getDate()}Create an issue with only required fields`, function(done) {
     chai
       .request(server)
       .post(`/api/issues/apitest`)
@@ -38,23 +52,32 @@ suite('Functional Tests', function() {
         created_by: "kate-mills",
       })
       .end(function(err, res) {
-        //_ids.push(res.body._id)
+        _ids.push(res.body._id)
         assert.equal(res.status, 200);
+        assert.equal(res.body.issue_title, "Not better");
+        assert.equal(res.body.issue_text, "You're a superstar anyway!");
+        assert.equal(res.body.created_by, "kate-mills");
+        assert.equal(res.body.assigned_to, "");
+        assert.equal(res.body.status_text, "");
+        assert.equal(res.body.open, true);
+        assert.equal(res.body.created_on, new Date(res.body.created_on).toJSON());
+        assert.equal(res.body.updated_on.length>0, true);
         done();
       });
   });
 
   // #3
-  test('POST: Create an issue with missing required fields', function(done) {
+  test(`POST ${getDate()}Create an issue with missing required fields`, function(done) {
     chai
       .request(server)
       .post(`/api/issues/apitest`)
       .send({
-        issue_title: "Needs fixin",
+        issue_title: "Needs more",
         issue_text: "Fix, please",
       })
       .end(function(err, res) {
         assert.equal(res.status, 200);
+        assert.equal(res.body.error,'required field(s) missing');
         done();
       });
   });
