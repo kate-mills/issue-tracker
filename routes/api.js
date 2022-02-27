@@ -70,7 +70,14 @@ module.exports = function (app) {
     
     .delete(function (req, res){
       let project = req.params.project;
-      res.json([]) 
-    });
+      let {_id} = req.body
+
+      if(!_id){
+        return res.json({error: 'missing _id'});
+      }
+
+      let result = issueHandler.deleteIssue(project, _id);
+      res.json(result)
+    })
     
 };

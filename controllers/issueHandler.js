@@ -59,5 +59,20 @@ function IssueHandler() {
       _id: attrs._id
     }
   };
+
+  this.deleteIssue = function(title, id){
+    let initialCount = this.getProject(title).length
+
+    let issues = [...this.db[title]].filter((issue) => {
+      return issue._id !== id
+    });
+
+    if(issues.length + 1 === initialCount){
+      this.db[title] = [...issues];
+      return {_id: id, result:'successfully deleted'}
+    }
+
+    return {_id: id, error:'could not delete'}
+  };
 }
 module.exports = IssueHandler;
