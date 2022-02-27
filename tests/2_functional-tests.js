@@ -233,6 +233,9 @@ suite('Functional Tests', function() {
       })
       .end(function(err, res) {
         assert.equal(res.status, 200);
+        assert.equal(res.body.error, 'could not delete');
+        assert.equal(res.body._id, '123abc');
+
         done();
       });
   });
