@@ -43,14 +43,14 @@ suite('Functional Tests', function() {
       .request(server)
       .post(`/api/issues/apitest`)
       .send({
-        issue_title: "Not better",
+        issue_title: "Best Issue Ever",
         issue_text: "You're a superstar anyway!",
         created_by: "kate-mills",
       })
       .end(function(err, res) {
         _ids.push(res.body._id)
         assert.equal(res.status, 200);
-        assert.equal(res.body.issue_title, "Not better");
+        assert.equal(res.body.issue_title, "Best Issue Ever");
         assert.equal(res.body.issue_text, "You're a superstar anyway!");
         assert.equal(res.body.created_by, "kate-mills");
         assert.equal(res.body.assigned_to, "");
@@ -94,9 +94,12 @@ suite('Functional Tests', function() {
   test('GET View issues on a project with one filter', function(done) {
     chai
       .request(server)
-      .get(`/api/issues/apitest?open=true`)
+      .get(`/api/issues/apitest?assigned_to=`)
       .end(function(err, res) {
         assert.equal(res.status, 200);
+        assert.equal(res.body.length, 1);
+        assert.equal(res.body[0].open, true);
+        assert.equal(res.body[0].issue_title, "Best Issue Ever");
         done();
       });
   });
