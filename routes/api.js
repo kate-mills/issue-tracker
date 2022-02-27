@@ -9,7 +9,8 @@ module.exports = function (app) {
   
     .get(function (req, res){
       let project = req.params.project;
-      res.json([])
+      let issues = issueHandler.getProject(project);
+      res.json(issues)
     })
     
     .post(function (req, res){
