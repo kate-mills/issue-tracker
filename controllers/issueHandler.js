@@ -5,6 +5,12 @@ function IssueHandler() {
     return this.db[title] || [];
   };
 
+  this.createIssue = function(title, issue){
+    this.db[title] = this.getProject(title);
+    this.db[title].unshift(issue);
+    return this.db[title][0]
+  };
+
   this.filterIssues = function(issues, filters){
     let result = [];
 
@@ -23,12 +29,6 @@ function IssueHandler() {
       }
     });
     return result;
-  };
-
-  this.saveIssue = function(title, issue){
-    this.db[title] = this.getProject(title);
-    this.db[title].unshift(issue);
-    return this.db[title][0]
   };
 
   this.updateIssue = function(title, attrs){

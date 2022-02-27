@@ -43,7 +43,7 @@ module.exports = function (app) {
         ...optional,
         ...defaults
       }
-      issue = issueHandler.saveIssue(project, issue);
+      issue = issueHandler.createIssue(project, issue);
       res.json({...issue})
     })
     
