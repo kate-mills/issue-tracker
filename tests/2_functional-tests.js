@@ -124,11 +124,15 @@ suite('Functional Tests', function() {
       .request(server)
       .put(`/api/issues/apitest`)
       .send({
-        //_id: _ids[0],
+        _id: _ids[0],
         issue_title: "Better Issue"
       })
       .end(function(err, res) {
+
         assert.equal(res.status, 200);
+        assert.equal(res.body.result, 'successfully updated');
+        assert.equal(res.body._id, _ids[0]);
+
         done();
       });
   });
