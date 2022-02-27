@@ -177,10 +177,13 @@ suite('Functional Tests', function() {
       .request(server)
       .put(`/api/issues/apitest`)
       .send({
-        //_id: _ids[0]
+        _id: _ids[0]
       })
       .end(function(err, res) {
         assert.equal(res.status, 200);
+        assert.equal(res.body.error, 'no update field(s) sent')
+        assert.equal(res.body._id, _ids[0]);
+
         done();
       });
   });
