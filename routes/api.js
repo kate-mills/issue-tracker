@@ -49,7 +49,23 @@ module.exports = function (app) {
     
     .put(function (req, res){
       let project = req.params.project;
-      res.json([])
+      let {_id} = req.body
+      let attrs = {};
+
+      if(!_id){
+        return res.json({error: 'missing _id'});
+      }
+      for (const [key, val] of Object.entries(req.body)){
+        if (val !== "") {
+          attrs[key] = val
+        }
+      }
+      if(Object.keys(attrs).length <= 1){
+        return res.json({error:'no update field(s) sent',
+          _id: _id
+        })
+      }
+      return res.json(issueHandler.updateIssue(project, attrs))
     })
     
     .delete(function (req, res){
