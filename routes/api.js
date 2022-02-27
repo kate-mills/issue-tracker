@@ -14,23 +14,30 @@ module.exports = function (app) {
     
     .post(function (req, res){
       let project = req.params.project;
-
-      let  { issue_title, issue_text, created_by} = req.body;
+      let  { issue_title, issue_text, created_by} = req.body
 
       if (!issue_title || !issue_text || !created_by) {
         return res.json({error: 'required field(s) missing'});
       }
-      let fields = {
+      let optional = {
+        assigned_to: req.body.assigned_to || "",
+        status_text: req.body.status_text || "",
+      };
+      let defaults = {
+        _id: Array.from({length: 10}).reduce((acc)=>acc+Math.round(Math.random()*10),""),
+        open: true,
+        created_on: new Date().toISOString(),
+        updated_on: new Date().toISOString()
+      };
+      let issue = {
         issue_title,
         issue_text,
         created_by,
-        assigned_to: req.body.assigned_to || "",
-        status_text: req.body.status_text || ""
-      };
-      let result = issueHandler.saveIssue(
-        project, fields
-      );
-      res.json(result)
+        ...optional,
+        ...defaults
+      }
+      issue = issueHandler.saveIssue(project, issue);
+      res.json({...issue})
     })
     
     .put(function (req, res){
