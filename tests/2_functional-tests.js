@@ -7,15 +7,11 @@ const server = require('../server');
 chai.use(chaiHttp);
 
 suite('Functional Tests', function() {
-  let getDate = () => {
-    return new Date().toISOString().split('T')[1].replace('Z', ': ')
-  }
-
   let  _ids = [];  // valid ids returned from succesful post request
 
 
   // #1
-  test(`POST ${getDate()}Create an issue with every field`, function(done) {
+  test(`POST Create an issue with every field`, function(done) {
     chai
       .request(server)
       .post(`/api/issues/apitest`)
@@ -42,7 +38,7 @@ suite('Functional Tests', function() {
   });
 
   // #2
-  test(`POST ${getDate()}Create an issue with only required fields`, function(done) {
+  test(`POST Create an issue with only required fields`, function(done) {
     chai
       .request(server)
       .post(`/api/issues/apitest`)
@@ -67,7 +63,7 @@ suite('Functional Tests', function() {
   });
 
   // #3
-  test(`POST ${getDate()}Create an issue with missing required fields`, function(done) {
+  test(`POST Create an issue with missing required fields\n`, function(done) {
     chai
       .request(server)
       .post(`/api/issues/apitest`)
@@ -83,7 +79,7 @@ suite('Functional Tests', function() {
   });
 
   // # 4
-  test('GET: View issues on a project', function(done) {
+  test('GET View issues on a project', function(done) {
     chai
       .request(server)
       .get(`/api/issues/apitest`)
@@ -95,7 +91,7 @@ suite('Functional Tests', function() {
   });
 
   // # 5
-  test('GET: View issues on a project with one filter', function(done) {
+  test('GET View issues on a project with one filter', function(done) {
     chai
       .request(server)
       .get(`/api/issues/apitest?open=true`)
@@ -106,7 +102,7 @@ suite('Functional Tests', function() {
   });
 
   // # 6
-  test('GET: View issues on a project with multiple filters', function(done) {
+  test('GET View issues on a project with multiple filters\n', function(done) {
     chai
       .request(server)
       .get(`/api/issues/apitest?open=true&assigned_to=kate`)
@@ -117,7 +113,7 @@ suite('Functional Tests', function() {
   });
 
   // #7
-  test('PUT: Update one field on an issue', function(done) {
+  test('PUT Update one field on an issue', function(done) {
     chai
       .request(server)
       .put(`/api/issues/apitest`)
@@ -132,7 +128,7 @@ suite('Functional Tests', function() {
   });
 
   // #8
-  test('PUT: Update multiple fields on an issue', function(done) {
+  test('PUT Update multiple fields on an issue', function(done) {
     chai
       .request(server)
       .put(`/api/issues/apitest`)
@@ -148,7 +144,7 @@ suite('Functional Tests', function() {
   });
 
   // #9
-  test('PUT: Update an issue with missing _id', function(done) {
+  test('PUT Update an issue with missing _id', function(done) {
     chai
       .request(server)
       .put(`/api/issues/apitest`)
@@ -162,7 +158,7 @@ suite('Functional Tests', function() {
   });
 
   // #10
-  test('PUT: Update an issue with no fields to update', function(done) {
+  test('PUT Update an issue with no fields to update', function(done) {
     chai
       .request(server)
       .put(`/api/issues/apitest`)
@@ -176,7 +172,7 @@ suite('Functional Tests', function() {
   });
 
   // #11
-  test('PUT: Update an issue with an invalid _id', function(done) {
+  test('PUT Update an issue with an invalid _id\n', function(done) {
     chai
       .request(server)
       .put(`/api/issues/apitest`)
