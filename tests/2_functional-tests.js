@@ -33,6 +33,7 @@ suite('Functional Tests', function() {
         assert.equal(res.body.open, true);
         assert.equal(res.body.created_on, new Date(res.body.created_on).toJSON());
         assert.equal(res.body.updated_on.length>0, true);
+
         done();
       });
   });
@@ -58,12 +59,13 @@ suite('Functional Tests', function() {
         assert.equal(res.body.open, true);
         assert.equal(res.body.created_on, new Date(res.body.created_on).toJSON());
         assert.equal(res.body.updated_on.length>0, true);
+
         done();
       });
   });
 
   // #3
-  test(`POST Create an issue with missing required fields\n`, function(done) {
+  test(`POST Create an issue with missing required fields`, function(done) {
     chai
       .request(server)
       .post(`/api/issues/apitest`)
@@ -74,6 +76,7 @@ suite('Functional Tests', function() {
       .end(function(err, res) {
         assert.equal(res.status, 200);
         assert.equal(res.body.error,'required field(s) missing');
+
         done();
       });
   });
@@ -86,6 +89,7 @@ suite('Functional Tests', function() {
       .end(function(err, res) {
         assert.equal(res.status, 200);
         assert.equal(res.body.length, 2)
+
         done();
       });
   });
@@ -100,12 +104,13 @@ suite('Functional Tests', function() {
         assert.equal(res.body.length, 1);
         assert.equal(res.body[0].open, true);
         assert.equal(res.body[0].issue_title, "Best Issue Ever");
+
         done();
       });
   });
 
   // # 6
-  test('GET View issues on a project with multiple filters\n', function(done) {
+  test('GET View issues on a project with multiple filters', function(done) {
     chai
       .request(server)
       .get(`/api/issues/apitest?open=true&assigned_to=kate`)
@@ -114,6 +119,7 @@ suite('Functional Tests', function() {
         assert.equal(res.body.length, 1);
         assert.equal(res.body[0].open, true);
         assert.equal(res.body[0].issue_title, "Be creative");
+
         done();
       });
   });
@@ -167,6 +173,7 @@ suite('Functional Tests', function() {
       .end(function(err, res) {
         assert.equal(res.status, 200);
         assert.equal(res.body.error, 'missing _id');
+
         done();
       });
   });
@@ -189,7 +196,7 @@ suite('Functional Tests', function() {
   });
 
   // #11
-  test('PUT Update an issue with an invalid _id\n', function(done) {
+  test('PUT Update an issue with an invalid _id', function(done) {
     chai
       .request(server)
       .put(`/api/issues/apitest`)
@@ -248,6 +255,7 @@ suite('Functional Tests', function() {
       .send({})
       .end(function(err, res) {
         assert.equal(res.status, 200);
+
         done();
       });
   });
