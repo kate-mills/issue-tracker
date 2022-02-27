@@ -212,10 +212,13 @@ suite('Functional Tests', function() {
       .request(server)
       .delete(`/api/issues/apitest`)
       .send({
-        //_id: _ids[1]
+        _id: _ids[1]
       })
       .end(function(err, res) {
         assert.equal(res.status, 200);
+        assert.equal(res.body.result, 'successfully deleted');
+        assert.equal(res.body._id, _ids[1]);
+
         done();
       });
   });
