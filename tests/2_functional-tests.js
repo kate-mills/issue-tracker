@@ -89,6 +89,7 @@ suite('Functional Tests', function() {
       .get(`/api/issues/apitest`)
       .end(function(err, res) {
         assert.equal(res.status, 200);
+        assert.equal(res.body.length, 2)
         done();
       });
   });
