@@ -14,7 +14,7 @@ module.exports = function (app) {
 
       issues = ((issues.length === 0)
         ? issues
-        : issueHandler.filterIssues(issues, req.query))
+        : issueHandler.getFilteredIssues(issues, req.query))
 
       res.json(issues)
     })

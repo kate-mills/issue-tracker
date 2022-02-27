@@ -11,7 +11,7 @@ function IssueHandler() {
     return this.db[title][0]
   };
 
-  this.filterIssues = function(issues, filters){
+  this.getFilteredIssues = function(issues, filters={}){
     let result = [];
 
     issues.forEach((issue) => {
@@ -46,7 +46,7 @@ function IssueHandler() {
       return issue
     })
 
-    // check for successful update
+    // check if update was successful
     if(updateCount === 1){
       this.db[title] =  [...issues]
       return {
@@ -61,17 +61,16 @@ function IssueHandler() {
   };
 
   this.deleteIssue = function(title, id){
-    let initialCount = this.getProject(title).length
+    let currentIssues = this.getProject(title);
 
-    let issues = [...this.db[title]].filter((issue) => {
+    let issues = [...currentIssues].filter((issue) => {
       return issue._id !== id
     });
 
-    if(issues.length + 1 === initialCount){
+    if(issues.length + 1 === currentIssues.length){
       this.db[title] = [...issues];
       return {_id: id, result:'successfully deleted'}
     }
-
     return {_id: id, error:'could not delete'}
   };
 }
