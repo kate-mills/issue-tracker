@@ -255,6 +255,7 @@ suite('Functional Tests', function() {
       .send({})
       .end(function(err, res) {
         assert.equal(res.status, 200);
+        assert.equal(res.body.error, 'missing _id');
 
         done();
       });
