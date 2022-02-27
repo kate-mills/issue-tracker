@@ -9,7 +9,13 @@ module.exports = function (app) {
   
     .get(function (req, res){
       let project = req.params.project;
+
       let issues = issueHandler.getProject(project);
+
+      issues = ((issues.length === 0)
+        ? issues
+        : issueHandler.filterIssues(issues, req.query))
+
       res.json(issues)
     })
     
